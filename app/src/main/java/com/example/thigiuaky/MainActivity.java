@@ -48,21 +48,34 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = etName.getText().toString().trim();
                 String ageStr = etAge.getText().toString().trim();
+
                 if (name.isEmpty()) {
                     etName.setError("Nhập tên");
                     return;
-            }
+                }
                 if (ageStr.isEmpty()) {
                     etAge.setError("Nhập tuổi");
                     return;
                 }
-                Intent age = null;
+                Integer age = null;
                 try {
                     age = Integer.parseInt(ageStr);
                 }
-                catch ( )
-
-
+                catch (NumberFormatException e) {
+                    etAge.setError("Tuổi phải là số");
+                    return;
+                }
+                if (age<0 || age>120) {
+                    etAge.setError("Tuổi không hợp lệ");
+                    return;
+                }
+                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("age", age);
+                getResult.launch(intent);
+            }
         });
+
+
     }
 }
